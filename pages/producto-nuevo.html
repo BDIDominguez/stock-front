@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="" type="image/x-icon">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Gestión de Productos</h1>
+        <form id="productForm">
+            <div class="form-group">
+                <label for="plu">PLU</label>
+                <input type="text" id="plu" name="plu" placeholder="Ingrese el código PLU" required>
+                <button type="button" onclick="buscarProducto()">Buscar</button>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre del producto" required>
+            </div>
+            <div class="form-group">
+                <label for="costo">Costo</label>
+                <input type="number" id="costo" name="costo" placeholder="Ingrese el costo" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input type="number" id="precio" name="precio" placeholder="Ingrese el precio" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" name="stock" placeholder="Ingrese el stock disponible" required>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="new" onclick="limpiarFormulario()">Nuevo</button>
+                <button type="button" class="save" onclick="guardarProducto()">Guardar</button>
+                <button type="button" class="delete" onclick="eliminarProducto()">Eliminar</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

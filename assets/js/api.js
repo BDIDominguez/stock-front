@@ -1,3 +1,4 @@
+
 export async function traerProductos() {
     const url = `https://stock-62p7.onrender.com/api/producto`
     try {
@@ -41,4 +42,53 @@ export function muestraTabla(productos, tabla, campos) {
             .join('')
         tabla.appendChild(fila)
     });
+}
+
+export async function consultaProductoxPLU(plu){
+    const url = `https://stock-62p7.onrender.com/api/producto/${plu}`
+    try {
+        const respuesta = await fetch(url)
+        if (respuesta.ok){
+            const datos = respuesta.json()
+            return datos
+        }else{
+            console.log("Error al obtener los Datos ", respuesta.status)
+            return []
+        }
+
+    } catch (error) {
+        console.log("Error al obtener los Datos ", error)
+        return []
+    }
+}
+
+export async function guardarProducto(producto) {
+    const urlbase = `https://stock-62p7.onrender.com/api/producto`
+    let url = urlbase
+    let nethod = "POST"
+
+    if (producto.plu && producto.plu > 0){
+        url = `${urlbase}/${producto.plu}`
+        method = "PUT"
+    }
+    try {
+        const respuesta = await fetch(url, {
+            method: method,
+            headers: {
+                "Contect-Type": "application/json",
+            },
+            body: JSON.stringify(producto),
+        })
+        if (!respuesta.ok){
+            throw new Error(`Error al guardar el producto: ${respuesta.statusText}`)
+        }
+        const datos = await respuesta.json()
+        console.log("Producto guardado con exito: ", data)
+        return datos
+    } catch (error) {
+        console.log("Error: ", error)
+        throw error
+    }
+
+    
 }
