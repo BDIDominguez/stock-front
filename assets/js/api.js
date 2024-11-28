@@ -65,8 +65,8 @@ export async function consultaProductoxPLU(plu){
 export async function guardarProducto(producto) {
     const urlbase = `https://stock-62p7.onrender.com/api/producto`
     let url = urlbase
-    let nethod = "POST"
-
+    let method = "POST"
+        
     if (producto.plu && producto.plu > 0){
         url = `${urlbase}/${producto.plu}`
         method = "PUT"
@@ -75,7 +75,7 @@ export async function guardarProducto(producto) {
         const respuesta = await fetch(url, {
             method: method,
             headers: {
-                "Contect-Type": "application/json",
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(producto),
         })
@@ -83,7 +83,7 @@ export async function guardarProducto(producto) {
             throw new Error(`Error al guardar el producto: ${respuesta.statusText}`)
         }
         const datos = await respuesta.json()
-        console.log("Producto guardado con exito: ", data)
+        console.log("Producto guardado con exito: ", datos)
         return datos
     } catch (error) {
         console.log("Error: ", error)
