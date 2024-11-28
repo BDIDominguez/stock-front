@@ -1,6 +1,7 @@
-
+//const baseURL = `https://stock-62p7.onrender.com`
+const baseURL = `http://localhost:8080`
 export async function traerProductos() {
-    const url = `https://stock-62p7.onrender.com/api/producto`
+    const url = `${baseURL}/api/producto`
     try {
         const respuesta = await fetch(url)
         if (respuesta.ok){
@@ -45,7 +46,7 @@ export function muestraTabla(productos, tabla, campos) {
 }
 
 export async function consultaProductoxPLU(plu){
-    const url = `https://stock-62p7.onrender.com/api/producto/${plu}`
+    const url = `${baseURL}/api/producto/${plu}`
     try {
         const respuesta = await fetch(url)
         if (respuesta.ok){
@@ -63,14 +64,25 @@ export async function consultaProductoxPLU(plu){
 }
 
 export async function guardarProducto(producto) {
-    const urlbase = `https://stock-62p7.onrender.com/api/producto`
+    const urlbase = `${baseURL}/api/producto`
     let url = urlbase
     let method = "POST"
-        
+    console.log("Producto recibido  ",producto)
+    console.log("Producto.plu   " ,producto.plu)
+    console.log("Producto.plu > 0  " ,producto.plu > 0)
+    
     if (producto.plu && producto.plu > 0){
-        url = `${urlbase}/${producto.plu}`
-        method = "PUT"
+        const existe = consultaProductoxPLU(producto.plu)
+        if (existe.plu === producto.plu){
+            url = `${urlbase}/${producto.plu}`    
+            method = "PUT"
+        }else{
+            url = `${urlbase}`
+        }
     }
+
+    console.log("Cadena de conexion al back  ",url)
+    console.log("Producto a Guardar  ",producto)
     try {
         const respuesta = await fetch(url, {
             method: method,
@@ -86,9 +98,27 @@ export async function guardarProducto(producto) {
         console.log("Producto guardado con exito: ", datos)
         return datos
     } catch (error) {
-        console.log("Error: ", error)
+        console.log("Try Error: ", error)
         throw error
     }
+}
 
-    
+export async function eliminarProductoxPLU(plu){
+    const url = `${baseURL}/api/producto/${plu}`
+    try {
+        const respuesta = await fetch(url, {
+            method: 'DELETE',
+        })
+        if (respuesta.ok){
+            console.log("Se eliminar el producto correctamente")
+            return true
+        }else{
+            console.log("Error al eliminar el producto ", respuesta.status)
+            return false
+        }
+
+    } catch (error) {
+        console.log("Try Error al intentar elimunar ", error)
+        return false
+    }
 }

@@ -1,4 +1,4 @@
-import {consultaProductoxPLU, guardarProducto} from './api.js'
+import {consultaProductoxPLU, guardarProducto,eliminarProductoxPLU} from './api.js'
 
 async function buscarProducto(){
     const vPLU = document.getElementById('plu').value
@@ -56,7 +56,7 @@ window.guardarProd = guardarProd
 
 function creaCadena(){
     const producto = {
-        PLU : parseInt(document.getElementById('plu').value,10),
+        plu : parseInt(document.getElementById('plu').value,10),
         nombre : document.getElementById('nombre').value,
         costo : parseFloat(document.getElementById('costo').value),
         precio : parseFloat(document.getElementById('precio').value),
@@ -64,3 +64,15 @@ function creaCadena(){
     }
     return producto 
 }
+
+function eliminar(){
+    const vPLU = document.getElementById('plu').value
+    const confirmacion = confirm(`Seguro de Eliminar el PLU ${vPLU}`)
+    if (confirmacion){
+        eliminarProductoxPLU(vPLU).then(()=> limpiarFormulario())
+        .catch((error) => alert(`No se puede eliminar el PLU: ${vPLU} mensage de error: ${error.message}`))
+    }else{
+        console.log("Se Cancelo la Eliminacion")
+    }
+}
+window.eliminar = eliminar
